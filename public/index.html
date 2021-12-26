@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Talk - Aurélien Maigret</title>
+    <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no">
+    <meta name="viewport" content="user-scalable=no,initial-scale=1,minimum-scale=1,width=device-width,height=device-height,viewport-fit=cover">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body class="initializing">
+    <div id="app">
+      <div v-if="!socket || !apiKey" class="connection-page">
+        <h1 v-if="!socket">Connecting...</h1>
+        <div v-else>
+          <h1>New participant</h1>
+          <input v-model="lastname" type="text" placeholder="Lastname">
+          <input v-model="firstname" type="text" placeholder="Firstname">
+          <button @click.prevent="newParticipant()">Join the course</button>
+        </div>
+      </div>
+      <template v-else>
+        <div v-if="isAdmin && pendingParticipants.length" class="admin-pending-participants admin-topbar">
+          <a v-for="pp in pendingParticipants" :key="pp.id" :class="{ selected: pp.id === currentPendingParticipantId }" @click.prevent="currentPendingParticipantId = pp.id">{{ pp.lastname }} {{ pp.firstname }}</a>
+        </div>
+        <div v-if="isAdmin" class="admin-participants admin-topbar">
+          <a v-for="participant in participants" :key="participant.id">{{ participant.lastname }} {{ participant.firstname }}</a>
+        </div>
+        <div v-if="isAdmin" class="admin-slides admin-topbar">
+          <a class="action" @click.prevent="updateAdminSlideSlug()">SELECT</a>
+          <a v-for="slide in slides" :key="slide.slug" :class="{ active: slide.slug === currentSlideSlug, selected: slide.slug === adminSlideSlug }" @click.prevent="currentSlideSlug = slide.slug">{{ slide.slug }}</a>
+        </div>
+        <div v-if="isAdmin && currentPendingParticipantId" class="pending-participant-form general-page">
+          <h5>Lastname</h5>
+          <input type="text" v-model="currentPendingParticipantLastname">
+          <h5>Firstname</h5>
+          <input type="text" v-model="currentPendingParticipantFirstname">
+          <h5>Slug</h5>
+          <input type="text" v-model="currentPendingParticipantSlug">
+          <button @click.prevent="newParticipant()">Accept participant</button>
+        </div>
+        <div v-else-if="!apiKey" class="pending-participant-form general-page">
+          <h5>Lastname</h5>
+          <input type="text" v-model="currentPendingParticipantLastname">
+          <h5>Firstname</h5>
+          <input type="text" v-model="currentPendingParticipantFirstname">
+          <button @click.prevent="newParticipant()">Join the course</button>
+        </div>
+        <div id="slide-content" v-else-if="currentSlide" v-html="currentSlide.content">
+        </div>
+        <div v-else class="loading general-page">
+          CONNECTING
+        </div>
+      </template>
+    </div>
+
+    <script type="text/javascript" src="vue-3.2.20.global.prod.js"></script>
+    <script type="text/javascript" src="app.js"></script>
+    <script type="text/javascript">
+      window.Vue.createApp(window.AppDefinition).mount('#app')
+    </script>
+  </body>
+</html>

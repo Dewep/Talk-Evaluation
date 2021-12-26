@@ -1,0 +1,70 @@
+html {
+  font-size: 18px;
+  font-family: 'Ubuntu Mono', monospace;
+}
+
+html, body, #app {
+  min-width: 320px;
+  background: #FFF;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  color: #404040;
+}
+
+body.initializing #app {
+  opacity: 0;
+}
+
+#app, #slide-content, #slide-content > section {
+  display: flex;
+  overflow: hidden;
+  flex-direction: column;
+}
+
+.admin-topbar {
+  flex: 0 0 auto;
+  background: #404040;
+  padding: 6px 2px;
+}
+.admin-topbar a {
+  background: #FFF;
+  border-bottom: 2px solid #FFF;
+  opacity: .9;
+  cursor: pointer;
+  margin: 0 3px;
+  padding: 1px 4px;
+}
+.admin-topbar a.selected {
+  border-color: #fa6e6e;
+}
+.admin-topbar a.active {
+  font-weight: bold;
+}
+.admin-topbar a:hover {
+  opacity: 1;
+}
+.admin-pending-participants a {
+  background: #e6e687;
+}
+.admin-topbar a.action {
+  background: #879de6;
+  border-color: #fa6e6e;
+  font-weight: bold;
+}
+#slide-content, #slide-content > section {
+  flex: 1 1 auto;
+}
+
+.slide-title {
+  background-size: 75%;
+  background-repeat: no-repeat;
+  background-image: url(slide-bg-title.png);
+}
+.slide-title article {
+  font-size: 300%;
+  position: absolute;
+  bottom: 5%;
+  right: 5%;
+  width: 40%;
+}

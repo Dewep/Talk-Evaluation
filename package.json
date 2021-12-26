@@ -1,0 +1,17 @@
+{
+  "name": "talk-evaluation",
+  "version": "1.0.0",
+  "description": "Conference web project, for courses & evaluation",
+  "main": "index.js",
+  "repository": "git@github.com:Dewep/Talk-Evaluation.git",
+  "author": "Maigret Aurélien <github@dewep.net>",
+  "license": "MIT",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "ws": "^8.4.0"
+  }
+}
